@@ -1,0 +1,42 @@
+echo hello terminal "mesage hello" 
+pwd "to know the path of directory"
+ls "list archives"
+cd "change directory" cd . . "go to the parent folder ofthe las folder" cd ../.. "go back to folders"
+more <filename> to see what's in the file
+
+ls -l "list files in a vertical large list"
+clear "clean the terminal"
+mkdir "make a new directory"
+touch <filename> "create file"
+ls -a show all files inside the folder even hiiden files
+cd . "to see the .directory"
+cp <filename> <folderdestination> "Copy a file to a folder"
+rm <filename> remove file from folder
+mv <filename> <newfilename> "Change name or move file" mv <filename> <destination>
+mkdir folder/Folder-name "create folder inside other folder"
+mv index.html client/src "move a file into a folder inside other folder" 
+find "to see all the files of the folder"
+find -name <filename> "find a file inside a folder"
+mv header.png ..  "move a file to the previous folder"
+find ./client/assets/fonts  "find what is in a folder" 
+rm -r fonts "remove recursively a folder and what is inside"
+what normally have a file --touch
+echo text >> <filename> --echo I made this boilerplate >> README.md          "Put text in a text file"
+cp -r website-boilerplate  toms-website  "copy entire project to a new folder created with the command"
+
+
+
+
+client folder (client site files) 
+- index html
+- css styles sheet
+-index.js
+--assets folder
+--images folder 
+--fonts Folder
+
+OUTSIDE CLIENT(AND CLIENT)
+
+package.json
+server.js
+README.md
