@@ -1,0 +1,15 @@
+postgres=>\l list databases
+postgres=> CREATE DATABASE first_database;  "creata new database"
+postgres=>\c database_name; "connect to database"
+second_database=> \d "display databases"
+second_database=> CREATE TABLE first_table(); "create new  table"
+second_database=> \d second_table "display columns specific table"
+ALTER TABLE table_name ADD COLUMN column_name DATATYPE; "add column to table"  -- ALTER TABLE second_table ADD COLUMN name VARCHAR(30);
+ALTER TABLE table_name DROP COLUMN column_name; "drop column" 
+ALTER TABLE table_name RENAME COLUMN column_name TO new_name; "RENAME COLUMN"
+INSERT INTO table_name(column_1, column_2) VALUES(value1, value2); "insert data into the table"
+SELECT columns FROM table_name; (get info of table)
+DELETE FROM table_name WHERE condition; "Delete a row"
+
+
+ 
