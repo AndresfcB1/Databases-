@@ -1,15 +1,99 @@
-postgres=>\l list databases
+psql --username=freecodecamp dbname=postgres
+
+postgres=>\l "list databases"
+
 postgres=> CREATE DATABASE first_database;  "creata new database"
+
 postgres=>\c database_name; "connect to database"
-second_database=> \d "display databases"
+
+second_database=> \d "display tables"
+
 second_database=> CREATE TABLE first_table(); "create new  table"
+
 second_database=> \d second_table "display columns specific table"
+
 ALTER TABLE table_name ADD COLUMN column_name DATATYPE; "add column to table"  -- ALTER TABLE second_table ADD COLUMN name VARCHAR(30);
+
+ALTER TABLE characters ADD COLUMN name VARCHAR(30) NOT NULL;
+
+ALTER TABLE characters ADD COLUMN id SERIAL;
+
+ALTER TABLE more_info ADD COLUMN weight NUMERIC(4,1); 
+
 ALTER TABLE table_name DROP COLUMN column_name; "drop column" 
+
 ALTER TABLE table_name RENAME COLUMN column_name TO new_name; "RENAME COLUMN"
+
 INSERT INTO table_name(column_1, column_2) VALUES(value1, value2); "insert data into the table"
-SELECT columns FROM table_name; (get info of table)
+
+SELECT columns FROM table_name; (get info of table)  SELECT * FROM second_table;
+
+
 DELETE FROM table_name WHERE condition; "Delete a row"
 
+DROP TABLE table_name;
 
+DROP DATABASE database_name;
+
+
+ALTER DATABASE first_database RENAME TO mario_database; "change database name"
+
+INSERT INTO characters(name, homeland, favorite_color)
+VALUES('Mario', 'Mushroom Kingdom', 'Red'),
+('Luigi', 'Mushroom Kingdom', 'Green'),
+('Peach', 'Mushroom Kingdom', 'Pink');
+"insert multiple values" 
+ 
+UPDATE table_name SET column_name=new_value WHERE condition; "Update value"
+
+SELECT * FROM characters ORDER BY character_id;  'Order table'
+ALTER TABLE table_name ADD PRIMARY KEY(column_name);  'Add primary key'
+ALTER TABLE table_name DROP CONSTRAINT constraint_name; 'Drop constraint, you have to use the name that is assigned by default dy the database not the column name' 
+
+ALTER TABLE table_name ADD COLUMN column_name DATATYPE REFERENCES referenced_table_name(referenced_column_name); 'Add foreign key with the reference'
+ ALTER TABLE more_info ADD COLUMN character_id INT REFERENCES characters(character_id);
+ 
+ ALTER TABLE table_name ADD UNIQUE(column_name); 'Unique constraint for 1:1 relationship'- 'without this constraint is 1 to many'
+ ALTER TABLE more_info ADD UNIQUE(character_id);
+ 
+
+ALTER TABLE table_name ALTER COLUMN column_name SET NOT NULL; 'Alter column'
+ ALTER TABLE more_info ALTER COLUMN character_id SET NOT NULL;
+ 
+ SELECT character_id FROM characters; 'Select individual columns'
+ SELECT character_id, name  FROM characters; 'Select only 2 rows'
+ 
+SELECT character_id, name  FROM characters WHERE name='Toad'; 'Select with condition"
+
+CREATE TABLE table_name(column_name DATATYPE CONSTRAINTS);  "Create table with columns and constraint"
+  CREATE TABLE sounds(sound_id SERIAL PRIMARY KEY);
+
+ALTER TABLE sounds ADD COLUMN filename VARCHAR(40) NOT NULL UNIQUE;
+
+ALTER TABLE  sounds ADD COLUMN character_id INT NOT NULL  REFERENCES characters(character_id); ' add foreign key column with constraint'
+ALTER TABLE actions ADD COLUMN action VARCHAR(20) UNIQUE NOT NULL;
+
+'many to many relationship is created with a transition table' 
+
+'ADD FOREIGN KEY TO EXISTING COLUMN'
+ALTER TABLE table_name ADD FOREIGN KEY(column_name) REFERENCES referenced_table(referenced_column);
+ALTER TABLE character_actions ADD FOREIGN KEY(character_id) REFERENCES characters(character_id);
+
+MULTIPLE PRIMARY KEY
+ALTER TABLE table_name ADD PRIMARY KEY(column1, column2);
+
+JOIN FUNCTION
+SELECT columns FROM table_1 FULL JOIN table_2 ON table_1.primary_key_column = table_2.foreign_key_column;
+SELECT * FROM characters FULL JOIN more_info ON characters.character_id=more_info.character_id;
+
+
+'SEE INFO OF THREE TABLES,  relationship many to many'
+
+SELECT * FROM character_actions  FULL JOIN actions ON character_actions.action_id= actions.action_id FULL JOIN characters ON character_actions.character_id= characters.character_id;
+
+ 
+ 
+ 
+ 
+ 
  
