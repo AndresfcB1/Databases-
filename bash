@@ -341,11 +341,251 @@ done
  else 
  echo Include a positive integer as the first argument.
   fi
+----------------------------------------------------------------------------------------------------------------------------
+
+  Environment variables
+  "See them"
+  printenv
+  
+  print LANG VARIABLE
+  echo $LANG
+  
+  VIEW ALL VARIABLES IN THE SHELL
+  
+  declare -p
+  
+  RANDOM NUMBER USE VARIABLE 
+  $RANDOM
+  
+
+  
+ 
+ 
+ OPERATOR DOUBLE PARENTHESIS
+  
+  ((I++))
+  
+((I+=10))
+
+echo $((I+4))
+
+J=$(( I - 6))
+
+echo $(( J*5+25))
 
 
-  
-  
-  
+
+SEE SHELL VARIABLES
+
+declare -p <variable name>
+
+PRINT RANDOM BETWEEN A RANGE IN THE  TERMINAL
+echo $((RANDOM % 75)) VALUE BETWEEN 0 AND 74
+
+echo $((RANDOM % 75+1)) TOGET A VALUE BETWEEN 1 AND 75
+
+PRINT RANDOM BETWEEN A RANGE IN THE BASH FILE
+
+echo -e "\n~~ Bingo Number Generator ~~\n"
+
+NUMBER=$((RANDOM % 75 + 1))
+echo $NUMBER
+
+
+
+TEXT VARIABLE
+TEXT="The next number is, "
+
+
+                  conditional operator
+        =, *=, /=, %=,
+        +=, -=, <<=, >>=,
+        &=, ^=, |=      assignment
+
+
+COMPARE WITH PARENTHESIS
+if ((NUMBER <= 15 ))
+then 
+echo $TEXT B:$NUMBER
+fi
+
+
+ELIF CONDITIONAL
+
+if ((NUMBER <= 15 ))
+then 
+echo $TEXT B:$NUMBER
+elif [[ $NUMBER -le 30 ]]
+then 
+echo $TEXT I:$NUMBER
+fi
+
+MULTIPLE ELIF EX.
+
+
+if ((NUMBER <= 15 ))
+then 
+echo $TEXT B:$NUMBER
+elif [[ $NUMBER -le 30 ]]
+then 
+echo $TEXT I:$NUMBER
+elif ((NUMBER < 46))
+then 
+echo $TEXT N:$NUMBER
+elif [[ $NUMBER -lt 61 ]]
+then 
+echo $TEXT G:$NUMBER
+else
+echo $TEXT O:$NUMBER
+fi
+
+BINGO NUMBERS GENERATOR
+-------------------------------------------------------------------------------------------------------
+#!/bin/bash
+# Bingo Number Generator
+echo -e "\n~~ Bingo Number Generator ~~\n"
+TEXT="The next number is, "
+NUMBER=$((RANDOM % 75 + 1))
+
+
+if ((NUMBER <= 15 ))
+then 
+echo $TEXT B:$NUMBER
+elif [[ $NUMBER -le 30 ]]
+then 
+echo $TEXT I:$NUMBER
+elif ((NUMBER < 46))
+then 
+echo $TEXT N:$NUMBER
+elif [[ $NUMBER -lt 61 ]]
+then 
+echo $TEXT G:$NUMBER
+else
+echo $TEXT O:$NUMBER
+
+fi
+---------------------------------------------------------------------------------------------------------------------------
+
+FORTUNE TELLER
+
+CREATE AN ARRAY
+
+ARR=("a" "b" "c")
+
+print and specific position
+
+echo ${ARR[1]}
+
+PRINT ALL ARR echo $* or echo $@
+
+echo ${ARR[*]}
+echo ${ARR[@]}
+
+PRINT VARIABLE POSITION INSIDE ARRAY
+
+echo ${RESPONSES[$N]}
+
+FUNCTIONS
+
+GET_FORTUNE() {
+echo  Ask a yes or no question:
+}
+
+CALL THE FUNCTION BY PUTING THE NAME AFTER THE FUNCTION
+
+GET_FORTUNE() {
+echo  Ask a yes or no question:
+}
+
+GET_FORTUNE
+
+--loop to verify it is a question
+
+--verify value string
+
+GET_FORTUNE() {
+echo  Ask a yes or no question:
+read QUESTION
+
+}
+
+until [[  $QUESTION == "test?" ]]
+do
+  GET_FORTUNE
+done
+
+ 
+ compare patterns between strings
+ 
+ [[ "hello world"  =~ "lo wor" ]]; echo $?
+
+--verify string start wih letter 'h'
+
+[[ "hello world"  =~ ^h ]]; echo $?
+
+--verify start and ending
+
+[[ "hello world"  =~ ^h.+d$ ]]; echo $?
+
+--compare variable in terminal
+
+[[ $VAR == "hello world" ]]; echo $?
+
+--Verify ending in the bash file
+
+until [[  $QUESTION =~ \?$ ]]
+do
+  GET_FORTUNE
+done
+
+FINAL CODE FORTUNE
+--------------------------------------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+# Program to tell a persons fortune
+
+echo -e "\n~~ Fortune Teller ~~\n"
+
+RESPONSES=("Yes" "No" "Maybe" "Outlook good" "Don't count on it" "Ask again later")
+N=$(( RANDOM % 6 ))
+
+function GET_FORTUNE() {
+  if [[ ! $1 ]]
+  then
+    echo Ask a yes or no question:
+  else
+    echo Try again. Make sure it ends with a question mark:
+  fi
+
+  read QUESTION
+}
+
+GET_FORTUNE
+
+until [[ $QUESTION =~ \?$ ]]
+do
+  GET_FORTUNE again
+done
+
+echo -e "\n${RESPONSES[$N]}"
+
+--------------------------------------------------------------------------------------------------------------------------
+
+FIVE 
+
+--run other programs
+
+--verify type of command
+
+type echo
+
+type if
+
+
+
+
+
 
 
 
