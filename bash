@@ -60,6 +60,27 @@ echo -e "\n~~ Questionnaire ~~\n"
 "Print a new line before the test"
 echo -e "\nHello $NAME from $LOCATION. I learned that your favorite coding website is $WEBSITE!"
 
+Finale CODE QUESTIONNAIRE
+
+---------------------------------------------------------------------------------------------------------
+#!/bin/bash
+QUESTION1="What's your name?"
+QUESTION2="Where are you from?"
+QUESTION3="What's your favorite coding website?"
+echo -e "\n~~ Questionnaire ~~\n"
+echo $QUESTION1
+read NAME
+echo $QUESTION2
+read LOCATION
+echo $QUESTION3
+read WEBSITE
+
+
+
+
+echo -e "\nHello $NAME from $LOCATION. I learned that your favorite coding website is $WEBSITE!"
+
+------------------------------------------------------------------------------------------------------------------
 
 
 Countdown
@@ -222,7 +243,113 @@ File operators
 0
 
 
+Using the AND operator &&
+
+[[ -x countdown.sh && 5 -le 4 ]]; echo $?
+1
+
+using the OR  operator ||
+[[ -x countdown.sh || 5 -le 4 ]]; echo $?
+0
+
+
+LOOPS
+
+FOR LOOP FOR COUNTDOWN
+$1 variable to start countdown
+for (( i = $1; i > 0; i-- ))
+do
+  echo $i
+done
 
          
-         
-      
+  "Help only bring build in commands to see others use ls /   "
+
+ls /bin shows other commands in the folder bin.
+
+"Command sleep delays execution of code"
+
+sleep 3 => delay 3 seconds execution
+for (( i = $1; i > 0; i-- ))
+do
+  echo $i
+  sleep 1
+done
+
+Countdown to zero
+
+for (( i = $1; i >= 0; i-- ))
+do
+  echo $i
+  sleep 1
+done
+
+COMMENT MULTIPLE LINES
+
+: '
+for (( i = $1; i >= 0; i-- ))
+do
+  echo $i
+  sleep 1
+done
+'
+
+
+WHILE LOOP
+
+I=$1
+
+while [[ $I -ge 0 ]]
+do
+echo $I
+done
+
+WHILE LOOP FOR COUNTDOWN
+
+I=$1
+
+while [[ $I -ge 0 ]]
+do
+echo $I
+((I--))
+sleep 1
+done
+
+FINAL CODE COUNTDOWN BASH FILE
+----------------------------------------------------------------------------------------------------
+#!/bin/bash
+#Program that counts down to zero from a given argument
+echo -e "\n~~ Countdown Timer ~~\n"
+if [[ $1 -gt 0 ]]
+ then 
+I=$1
+
+while [[ $I -ge 0 ]]
+do
+echo $I
+((I--))
+sleep 1
+done
+
+: '
+for (( i = $1; i >= 0; i-- ))
+do
+  echo $i
+  sleep 1
+done
+'
+ else 
+ echo Include a positive integer as the first argument.
+  fi
+
+
+  
+  
+  
+
+
+
+
+
+
+
