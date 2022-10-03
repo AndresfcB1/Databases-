@@ -584,3 +584,356 @@ students=> SELECT *  FROM students ORDER BY gpa;
 
 students=> SELECT *  FROM students ORDER BY gpa DESC;
 
+students=> SELECT *  FROM students ORDER BY gpa DESC, first_Name ;
+
+students=> SELECT *  FROM students ORDER BY gpa DESC, first_Name LIMIT 10 ;
+
+students=> SELECT *  FROM students WHERE gpa IS NOT NULL ORDER BY gpa  DESC, first_Name LIMIT 10 ;                            
+
+students=> SELECT MIN(gpa) FROM students;     
++-----+
+| min |
++-----+
+| 1.8 |
++-----+
+(1 row)
+
+students=> SELECT MAX(gpa) FROM students; 
+    
++-----+
+| max |
++-----+
+| 4.0 |
++-----+
+(1 row)
+
+students=> SELECT SUM(major_id) FROM students; 
+    
++-----+
+| sum |
++-----+
+| 878 |
++-----+
+(1 row)
+
+students=> SELECT AVG(major_id) FROM students; 
+            
++---------------------+
+|         avg         |
++---------------------+
+| 38.1739130434782609 |
++---------------------+
+(1 row)
+
+students=> SELECT CEIL(AVG(major_id)) FROM students; 
+students=>     
++------+
+| ceil |
++------+
+|   39 |
++------+
+(1 row)
+
+
+students=> SELECT ROUND(AVG(major_id)) FROM students; 
+     
++-------+
+| round |
++-------+
+|    38 |
++-------+
+(1 row)
+
+
+students=> SELECT ROUND(AVG(major_id),5) FROM students; 
+      
++----------+
+|  round   |
++----------+
+| 38.17391 |
++----------+
+(1 row)
+
+students=> SELECT COUNT(*) FROM majors; 
+     
++-------+
+| count |
++-------+
+|     7 |
++-------+
+(1 row)
+
+students=> SELECT DISTINCT(major_id) FROM students; 
+      
++----------+
+| major_id |
++----------+
+|          |
+|       42 |
+|       41 |
+|       38 |
+|       36 |
+|       37 |
++----------+
+(6 rows)
+
+students=> SELECT major_id FROM students GROUP BY major_id; 
+      
++----------+
+| major_id |
++----------+
+|          |
+|       42 |
+|       41 |
+|       38 |
+|       36 |
+|       37 |
++----------+
+(6 rows)
+
+SELECT major_id,  COUNT(*) FROM students GROUP BY major_id; 
++----------+-------+
+| major_id | count |
++----------+-------+
+|          |     8 |
+|       42 |     1 |
+|       41 |     6 |
+|       38 |     4 |
+|       36 |     6 |
+|       37 |     6 |
++----------+-------+
+(6 rows)
+
+students=> SELECT major_id,  MIN(gpa)  FROM students GROUP BY major_id;
+         
++----------+-----+
+| major_id | min |
++----------+-----+
+|          | 2.3 |
+|       42 | 2.6 |
+|       41 | 2.1 |
+|       38 | 2.2 |
+|       36 | 1.9 |
+|       37 | 1.8 |
++----------+-----+
+(6 rows)
+
+students=> SELECT major_id,  MIN(gpa), MAX(gpa)  FROM students GROUP BY major_id HAVING MAX(gpa) = 4.0;
+students=>             
++----------+-----+-----+
+| major_id | min | max |
++----------+-----+-----+
+|       41 | 2.1 | 4.0 |
+|       37 | 1.8 | 4.0 |
++----------+-----+-----+
+(2 rows)
+
+students=> SELECT major_id,  MIN(gpa) AS min_gpa, MAX(gpa) as max_gpa  FROM students GROUP BY major_id HAVING MAX(gpa) = 4.0;
+                
++----------+---------+---------+
+| major_id | min_gpa | max_gpa |
++----------+---------+---------+
+|       41 |     2.1 |     4.0 |
+|       37 |     1.8 |     4.0 |
++----------+---------+---------+
+(2 rows)
+
+students=> SELECT major_id, COUNT(*) as number_of_students  FROM students GROUP BY major_id HAVING COUNT(*) < 8 ;
++----------+--------------------+
+| major_id | number_of_students |
++----------+--------------------+
+|       42 |                  1 |
+|       41 |                  6 |
+|       38 |                  4 |
+|       36 |                  6 |
+|       37 |                  6 |
++----------+--------------------+
+(5 rows)
+
+
+students=> SELECT * FROM students FULL JOIN majors ON students.major_id=majors.major_id;
+                                                
++------------+------------+--------------+----------+-----+----------+-------------------------+
+| student_id | first_name |  last_name   | major_id | gpa | major_id |          major          |
++------------+------------+--------------+----------+-----+----------+-------------------------+
+|          6 | Rhea       | Kellems      |       36 | 2.5 |       36 | Database Administration |
+|          7 | Emma       | Gilbert      |          |     |          |                         |
+|          8 | Kimberly   | Whitley      |       37 | 3.8 |       37 | Web Development         |
+|          9 | Jimmy      | Felipe       |       36 | 3.7 |       36 | Database Administration |
+|         10 | Kyle       | Stimson      |          | 2.8 |          |                         |
+|         11 | Casares    | Hijo         |       41 | 4.0 |       41 | Game Design             |
+|         12 | Noe        | Savage       |          | 3.6 |          |                         |
+|         13 | Sterling   | Boss         |       41 | 3.9 |       41 | Game Design             |
+|         14 | Brian      | Davis        |          | 2.3 |          |                         |
+|         15 | Kaija      | Uronen       |       41 | 3.7 |       41 | Game Design             |
+|         16 | Faye       | Conn         |       41 | 2.1 |       41 | Game Design             |
+|         17 | Efren      | Reilly       |       37 | 3.9 |       37 | Web Development         |
+|         18 | Danh       | Nhung        |          | 2.4 |          |                         |
+|         19 | Maxine     | Hagenes      |       36 | 2.9 |       36 | Database Administration |
+|         20 | Larry      | Saunders     |       38 | 2.2 |       38 | Data Science            |
+|         21 | Karl       | Kuhar        |       37 |     |       37 | Web Development         |
+|         22 | Lieke      | Hazenveld    |       41 | 3.5 |       41 | Game Design             |
+|         23 | Obie       | Hilpert      |       37 |     |       37 | Web Development         |
+|         24 | Peter      | Booysen      |          | 2.9 |          |                         |
+|         25 | Nathan     | Turner       |       36 | 3.3 |       36 | Database Administration |
+|         26 | Gerald     | Osiki        |       38 | 2.2 |       38 | Data Science            |
+|         27 | Vanya      | Hassanah     |       41 | 4.0 |       41 | Game Design             |
+|         28 | Roxelana   | Florescu     |       36 | 3.2 |       36 | Database Administration |
+|         29 | Helene     | Parker       |       38 | 3.4 |       38 | Data Science            |
+|         30 | Mariana    | Russel       |       37 | 1.8 |       37 | Web Development         |
+|         31 | Ajit       | Dhungel      |          | 3.0 |          |                         |
+|         32 | Mehdi      | Vandenberghe |       36 | 1.9 |       36 | Database Administration |
+|         33 | Dejon      | Howell       |       37 | 4.0 |       37 | Web Development         |
+|         34 | Aliya      | Gulgowski    |       42 | 2.6 |       42 | System Administration   |
+|         35 | Ana        | Tupajic      |       38 | 3.1 |       38 | Data Science            |
+|         36 | Hugo       | Duran        |          | 3.8 |          |                         |
+|            |            |              |          |     |       39 | Network Engineering     |
+|            |            |              |          |     |       40 | Computer Programming    |
++------------+------------+--------------+----------+-----+----------+-------------------------+
+(33 rows)
+
+
+students=> SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id;
+students=>                                                 
++------------+------------+--------------+----------+-----+----------+-------------------------+
+| student_id | first_name |  last_name   | major_id | gpa | major_id |          major          |
++------------+------------+--------------+----------+-----+----------+-------------------------+
+|          6 | Rhea       | Kellems      |       36 | 2.5 |       36 | Database Administration |
+|          7 | Emma       | Gilbert      |          |     |          |                         |
+|          8 | Kimberly   | Whitley      |       37 | 3.8 |       37 | Web Development         |
+|          9 | Jimmy      | Felipe       |       36 | 3.7 |       36 | Database Administration |
+|         10 | Kyle       | Stimson      |          | 2.8 |          |                         |
+|         11 | Casares    | Hijo         |       41 | 4.0 |       41 | Game Design             |
+|         12 | Noe        | Savage       |          | 3.6 |          |                         |
+|         13 | Sterling   | Boss         |       41 | 3.9 |       41 | Game Design             |
+|         14 | Brian      | Davis        |          | 2.3 |          |                         |
+|         15 | Kaija      | Uronen       |       41 | 3.7 |       41 | Game Design             |
+|         16 | Faye       | Conn         |       41 | 2.1 |       41 | Game Design             |
+|         17 | Efren      | Reilly       |       37 | 3.9 |       37 | Web Development         |
+|         18 | Danh       | Nhung        |          | 2.4 |          |                         |
+|         19 | Maxine     | Hagenes      |       36 | 2.9 |       36 | Database Administration |
+|         20 | Larry      | Saunders     |       38 | 2.2 |       38 | Data Science            |
+|         21 | Karl       | Kuhar        |       37 |     |       37 | Web Development         |
+|         22 | Lieke      | Hazenveld    |       41 | 3.5 |       41 | Game Design             |
+|         23 | Obie       | Hilpert      |       37 |     |       37 | Web Development         |
+|         24 | Peter      | Booysen      |          | 2.9 |          |                         |
+|         25 | Nathan     | Turner       |       36 | 3.3 |       36 | Database Administration |
+|         26 | Gerald     | Osiki        |       38 | 2.2 |       38 | Data Science            |
+|         27 | Vanya      | Hassanah     |       41 | 4.0 |       41 | Game Design             |
+|         28 | Roxelana   | Florescu     |       36 | 3.2 |       36 | Database Administration |
+|         29 | Helene     | Parker       |       38 | 3.4 |       38 | Data Science            |
+|         30 | Mariana    | Russel       |       37 | 1.8 |       37 | Web Development         |
+|         31 | Ajit       | Dhungel      |          | 3.0 |          |                         |
+|         32 | Mehdi      | Vandenberghe |       36 | 1.9 |       36 | Database Administration |
+|         33 | Dejon      | Howell       |       37 | 4.0 |       37 | Web Development         |
+|         34 | Aliya      | Gulgowski    |       42 | 2.6 |       42 | System Administration   |
+|         35 | Ana        | Tupajic      |       38 | 3.1 |       38 | Data Science            |
+|         36 | Hugo       | Duran        |          | 3.8 |          |                         |
++------------+------------+--------------+----------+-----+----------+-------------------------+
+(31 rows)
+
+students=> SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id;
+students=>                                                 
++------------+------------+--------------+----------+-----+----------+-------------------------+
+| student_id | first_name |  last_name   | major_id | gpa | major_id |          major          |
++------------+------------+--------------+----------+-----+----------+-------------------------+
+|          6 | Rhea       | Kellems      |       36 | 2.5 |       36 | Database Administration |
+|          8 | Kimberly   | Whitley      |       37 | 3.8 |       37 | Web Development         |
+|          9 | Jimmy      | Felipe       |       36 | 3.7 |       36 | Database Administration |
+|         11 | Casares    | Hijo         |       41 | 4.0 |       41 | Game Design             |
+|         13 | Sterling   | Boss         |       41 | 3.9 |       41 | Game Design             |
+|         15 | Kaija      | Uronen       |       41 | 3.7 |       41 | Game Design             |
+|         16 | Faye       | Conn         |       41 | 2.1 |       41 | Game Design             |
+|         17 | Efren      | Reilly       |       37 | 3.9 |       37 | Web Development         |
+|         19 | Maxine     | Hagenes      |       36 | 2.9 |       36 | Database Administration |
+|         20 | Larry      | Saunders     |       38 | 2.2 |       38 | Data Science            |
+|         21 | Karl       | Kuhar        |       37 |     |       37 | Web Development         |
+|         22 | Lieke      | Hazenveld    |       41 | 3.5 |       41 | Game Design             |
+|         23 | Obie       | Hilpert      |       37 |     |       37 | Web Development         |
+|         25 | Nathan     | Turner       |       36 | 3.3 |       36 | Database Administration |
+|         26 | Gerald     | Osiki        |       38 | 2.2 |       38 | Data Science            |
+|         27 | Vanya      | Hassanah     |       41 | 4.0 |       41 | Game Design             |
+|         28 | Roxelana   | Florescu     |       36 | 3.2 |       36 | Database Administration |
+|         29 | Helene     | Parker       |       38 | 3.4 |       38 | Data Science            |
+|         30 | Mariana    | Russel       |       37 | 1.8 |       37 | Web Development         |
+|         32 | Mehdi      | Vandenberghe |       36 | 1.9 |       36 | Database Administration |
+|         33 | Dejon      | Howell       |       37 | 4.0 |       37 | Web Development         |
+|         34 | Aliya      | Gulgowski    |       42 | 2.6 |       42 | System Administration   |
+|         35 | Ana        | Tupajic      |       38 | 3.1 |       38 | Data Science            |
+|            |            |              |          |     |       39 | Network Engineering     |
+|            |            |              |          |     |       40 | Computer Programming    |
++------------+------------+--------------+----------+-----+----------+-------------------------+
+(25 rows)
+
+SELECT major_id, COUNT(*), MIN(gpa) FROM students GROUP BY major_id, gpa;
+SELECT major_id,  MIN(gpa) FROM students GROUP BY  gpa;
+SELECT major_id,  MIN(gpa) FROM students GROUP BY major_id, gpa;
+SELECT major_id,  MIN(gpa), COUNT(*) FROM students GROUP BY major_id, gpa;
+SELECT major_id,  MIN(gpa),  FROM students GROUP BY major_id, gpa;
+SELECT major_id,  MIN(gpa)  FROM students GROUP BY major_id, gpa;
+SELECT major_id,  MIN(gpa)  FROM students GROUP BY major_id;
+SELECT major_id,  MIN(gpa), MAX(gpa)  FROM students GROUP BY major_id;
+SELECT major_id,  MIN(gpa), MAX(gpa)  FROM students GROUP BY major_id HAVING gpa = 4.0;
+SELECT major_id,  MIN(gpa), MAX(gpa)  FROM students GROUP BY major_id, gpa HAVING gpa = 4.0;
+SELECT major_id,  MIN(gpa), MAX(gpa)  FROM students GROUP BY major_id HAVING MAX(gp) = 4.0;
+SELECT major_id,  MIN(gpa), MAX(gpa)  FROM students GROUP BY major_id HAVING MAX(gpa) = 4.0;
+SELECT major_id,  MIN(gpa) AS min_gpa, MAX(gpa)  FROM students GROUP BY major_id HAVING MAX(gpa) = 4.0;
+SELECT major_id,  MIN(gpa) AS min_gpa, MAX(gpa) as max_gpa  FROM students GROUP BY major_id HAVING MAX(gpa) = 4.0;
+SELECT major_id, COUNT(*)  FROM students;
+SELECT major_id, COUNT(*)  FROM students GROUP BY major_id ;
+SELECT major_id, COUNT(*) as number_of_students  FROM students GROUP BY major_id ;9
+SELECT major_id, COUNT(*) as number_of_students  FROM students GROUP BY major_id HAVING COUNT(*) < 8 ;
+SELECT major_id, COUNT(*) as number_of_students, ROUND(AVG(gpa),2) as average_gpa  FROM students GROUP BY major_id HAVING COUNT(*) >1 ;
+SELECT * FROM students FULL JOIN majors ON students.major_id=majors.major_id;
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id;
+SELECT * FROM students INNER JOIN majors ON students.major_id=majors.major_id;
+SELECT * FROM majors LEFT JOIN students ON majors.major_id=students.major_id;
+SELECT * FROM majors LEFT JOIN students ON majors.major_id=students.major_id;
+SELECT * FROM majors INNER JOIN students ON majors.major_id=students.major_id;
+SELECT * FROM majors RIGHT JOIN students ON majors.major_id=students.major_id;
+SELECT * FROM majors FULL JOIN students ON majors.major_id=students.major_id;
+SELECT * FROM majors INNER JOIN students ON majors.major_id=students.major_id;
+SELECT major FROM majors INNER JOIN students ON majors.major_id=students.major_id;
+SELECT DISTINCT(major) FROM majors INNER JOIN students ON majors.major_id=students.major_id;
+SELECT * FROM students RIGHT JOIN students ON students.major_id=majors.major_id;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE students_id IS NULL;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE COUNT( students_id)=0;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE COUNT(students_id)=0;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE COUNT(student_id)=0;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE student_id=0;
+SELECT * FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE student_id IS NULL;
+SELECT major_id FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE student_id IS NULL;
+SELECT major FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE student_id IS NULL;
+SELECT first_name, last_name,major,gpa FROM students RIGHT JOIN majors ON students.major_id=majors.major_id WHERE student_id IS NULL;
+SELECT first_name, last_name,major,gpa FROM students RIGHT JOIN majors ON students.major_id=majors.major_id;
+SELECT first_name, last_name,major,gpa FROM students INNER JOIN majors ON students.major_id=majors.major_id;
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id;
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id WHERE students.major_id='Data Science';
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id WHERE students.major='Data Science';
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id WHERE majors.major='Data Science';
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id WHERE major='Data Science';
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id WHERE major='Data Science' OR gpa>=2.8;
+SELECT * FROM students LEFT JOIN majors ON students.major_id=majors.major_id WHERE major='Data Science' OR gpa>=3.8;
+SELECT first_name, last_name, major, gpa FROM students LEFT JOIN majors ON students.major_id=majors.major_id WHERE major='Data Science' OR gpa>=3.8;
+SELECT first_name,  major FROM students LEFT JOIN majors ON students.major_id=majors.major_id ;
+SELECT first_name,  major FROM students INNER JOIN majors ON students.major_id=majors.major_id ;
+SELECT * FROM students FULL JOIN majors ON students.major_id=majors.major_id ;
+SELECT * FROM students FULL JOIN majors ON students.major_id=majors.major_id WHERE first_name='%ri%' OR major='%ri%' ;
+SELECT * FROM students FULL JOIN majors ON students.major_id=majors.major_id WHERE first_name LIKE '%ri%' OR major LIKE '%ri%' ;
+SELECT first_name, major  FROM students FULL JOIN majors ON students.major_id=majors.major_id WHERE first_name LIKE '%ri%' OR major LIKE '%ri%' ;
+SELECT *  FROM students FULL JOIN majors ON students.major_id=majors.major_id;
+SELECT students.major_id  FROM students FULL JOIN majors ON students.major_id=majors.major_id;
+SELECT students.major_id  FROM students FULL JOIN majors AS m ON students.major_id=majors.major_id;
+SELECT students.major_id  FROM students FULL JOIN majors AS m ON students.major_id=m.major_id;
+SELECT s.major_id  FROM students AS s  FULL JOIN majors AS m ON s.major_id=m.major_id;
+SELECT s.major_id  FROM students AS s  FULL JOIN majors AS m USING major_id;
+SELECT s.major_id  FROM students AS s  FULL JOIN majors AS m USING(major_id);
+SELECT *  FROM students  FULL JOIN majors AS m USING(major_id);
+SELECT *  FROM students  FULL JOIN majors  USING(major_id);
+SELECT *  FROM students  FULL JOIN majors  USING(major_id) FULL JOIN courses USING(major_id);
+SELECT *  FROM students  FULL JOIN majors  USING(major_id) FULL JOIN courses USING(course_id);
+SELECT *  FROM students  FULL JOIN majors  USING(major_id) FULL JOIN majors_courses USING(major_id);
+SELECT *  FROM students  FULL JOIN majors  USING(major_id) FULL JOIN majors_courses USING(major_id) FULL JOIN courses USING(course_id);
+
