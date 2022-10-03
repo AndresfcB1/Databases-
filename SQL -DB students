@@ -546,3 +546,41 @@ done
 
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DB students part 2
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+rebuild database
+
+psql -U postgres < students.sql "in it to rebuild the database."
+
+queries
+students=> SELECT first_name, last_name, gpa FROM students WHERE gpa >= 3.8
+;
+
+students=> SELECT * FROM students WHERE last_name < 'M' AND ( gpa =3.9 OR gpa < 2.3);
+
+echo "$($PSQL "SELECT first_name, last_name, gpa FROM students WHERE last_name >= 'R' AND (gpa > 3.8 OR gpa < 2.0)")"
+
+students=> SELECT *  FROM courses WHERE course LIKE '%lgorithms';
+
+students=> SELECT *  FROM courses WHERE course LIKE 'Web%';
+
+students=> SELECT *  FROM courses WHERE course LIKE '_e%';
+students=> SELECT *  FROM courses WHERE course LIKE '% %';
+students=> SELECT *  FROM courses WHERE course NOT LIKE '% %';
+students=> SELECT *  FROM courses WHERE course  ILIKE '%A%' ;
+students=> SELECT *  FROM courses WHERE course NOT  ILIKE '%A%' ;
+students=> SELECT *  FROM courses WHERE course NOT  ILIKE '%A%' AND course LIKE '% %' ;
+echo "$($PSQL "SELECT last_name  FROM students WHERE last_name   ILIKE '%sa%' OR last_name LIKE '%r_'")"
+
+students=> SELECT *  FROM students WHERE gpa IS NULL ;
+students=> SELECT *  FROM students WHERE gpa IS NOT  NULL ;
+
+echo "$($PSQL "SELECT first_name, last_name, gpa FROM students WHERE major_id IS NULL AND (first_name LIKE 'D%' OR gpa > 3.0)")"
+
+students=> SELECT *  FROM students ORDER BY gpa;
+
+students=> SELECT *  FROM students ORDER BY gpa DESC;
+
