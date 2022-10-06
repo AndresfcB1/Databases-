@@ -1,0 +1,210 @@
+-Redirect output to file by overwritting
+
+codeally@d32ced17c7a3:~/project$ echo hello bash > stdout.txt
+
+-To append information to the file
+
+codeally@d32ced17c7a3:~/project$ echo hello bash >> stdout.txt
+
+-Redirect nothing into the file
+
+codeally@d32ced17c7a3:~/project$  > stdout.txt
+
+-stdout (standard out)  stderr (standard error)
+
+-Redirect error to standard error to log it and not show it in the console
+
+codeally@d32ced17c7a3:~/project$ bad_command 2> stderr.txt
+
+Redirect output to standard out and not show it in console
+
+codeally@d32ced17c7a3:~/project$ echo hello bash 1> stdout.txt
+
+stdin (standard input)
+codeally@d32ced17c7a3:~/project$ read NAME
+Andres Coronado
+
+print variable
+echo $<variable>
+
+Print variable output on stdout
+codeally@d32ced17c7a3:~/project$ echo $NAME 1> stdout.txt
+
+create file and write some info
+codeally@d32ced17c7a3:~/project$ echo freeCodeCamp > name.txt
+
+assign a file for stdin
+codeally@d32ced17c7a3:~/project$ read NAME < name.txt 
+
+-Pipe info from command 1 to 2
+codeally@d32ced17c7a3:~/project$ echo Andres | read NAME
+
+- cat its also used to read input
+- cat print something you put in the input or a file
+
+codeally@d32ced17c7a3:~/project$ cat name.txt
+freeCodeCamp
+
+-redirect stdin to name.txt
+codeally@d32ced17c7a3:~/project$ cat <  name.txt
+freeCodeCamp
+
+-Use echo to print your name and pipe the output into the cat command.
+codeally@d32ced17c7a3:~/project$ echo Andres | cat
+Andres
+
+You input your name, and your script output the result of the two commands. Run the script again, but use a pipe to echo your name as the input.
+codeally@d32ced17c7a3:~/project$ echo felipe | ./script.sh
+Hello felipe
+./script.sh: line 4: bad_command: command not found
+
+
+-It didn't ask for input this time because you gave it input with the pipe. 
+The two types of output were printed in the terminal. Run the same command
+but redirect stderr output to the stderr.txt
+
+codeally@d32ced17c7a3:~/project$ echo felipe | ./script.sh 2> stderr.txt
+Hello felipe
+
+-Again, it didn't ask for input. This time it only printed your name to the terminal and not the output of bad_command. 
+That produced an error, which you redirected to stderr.txt. Take a look at that file. You can redirect both the stderr
+and stdout by adding another redirection at the end like this: > <filename>. Enter the same command,
+redirect the stderr to the same place again, and the stdout to stdout.txt.
+
+codeally@d32ced17c7a3:~/project$ echo felipe | ./script.sh 2> stderr.txt 1> stdout.txt
+
+-Redirect input to a stdin file
+codeally@d32ced17c7a3:~/project$ ./script.sh < name.txt
+Hello freeCodeCamp
+./script.sh: line 4: bad_command: command not found
+
+-Redirect same command with stderr.txt
+codeally@d32ced17c7a3:~/project$ ./script.sh < name.txt 2> stderr.txt
+Hello freeCodeCamp
+
+-redirect to stdout.txt
+codeally@d32ced17c7a3:~/project$ ./script.sh < name.txt 2> stderr.txt 1> stdout.txt
+
+-wc(word count)to print info about file
+codeally@d32ced17c7a3:~/project$ wc  kitty_ipsum_1.txt
+  27  332 1744 kitty_ipsum_1.txt
+  
+ -wc show only how many lines
+ codeally@d32ced17c7a3:~/project$ wc -l  kitty_ipsum_1.txt
+27 kitty_ipsum_1.txt
+
+- wc how many words
+codeally@d32ced17c7a3:~/project$ wc -w  kitty_ipsum_1.txt
+332 kitty_ipsum_1.txt
+
+-wc how many characters
+codeally@d32ced17c7a3:~/project$ wc -m  kitty_ipsum_1.txt
+1738 kitty_ipsum_1.txt
+
+-That shows the byte count instead of the character count. Some characters must be more than one byte. Use cat to pipe the content
+of the file as the input of the wc command to see if the output is the same.
+
+codeally@d32ced17c7a3:~/project$ cat   kitty_ipsum_1.txt | wc
+     27     332    1744
+     
+ 
+It looks like the way you give input to a command may affect the output. It only printed the numbers that time and not 
+the filename. Try using redirection as the input with the same file and command to see what that outputs.    
+
+codeally@d32ced17c7a3:~/project$ wc <  kitty_ipsum_1.txt 
+  27  332 1744
+  
+  -save meta dat about a file in a new file
+ codeally@d32ced17c7a3:~/project$ echo "~~ kitty_ipsum_1.txt info ~~" > kitty_info.txt
+ 
+ -append info to a file with  a new line
+ codeally@d32ced17c7a3:~/project$ echo -e "\nNumber of lines:" >> kitty_info.txt
+ 
+--get info (lines) from a file and append it to a new file
+
+codeally@d32ced17c7a3:~/project$ cat  kitty_ipsum_1.txt | wc -l >> kitty_info.txt 
+
+--get info (words) from a file and append it to a new file
+codeally@d32ced17c7a3:~/project$ cat  kitty_ipsum_1.txt | wc -w >> kitty_info.txt 
+
+--use file as input to append number of characters
+codeally@d32ced17c7a3:~/project$ wc -m < kitty_ipsum_1.txt  >> kitty_info.txt 
+ 
+-find a pattern of text inside a file
+ codeally@d32ced17c7a3:~/project$ grep 'meow' kitty_ipsum_1.txt
+ 
+ -highlight words in a text with grep and flag --color
+ codeally@d32ced17c7a3:~/project$ grep --color  'meow' kitty_ipsum_1.txt
+ 
+ -Add line number to find word
+ codeally@d32ced17c7a3:~/project$ grep --color  -n  'meow' kitty_ipsum_1.txt
+ 
+ -fin regular expressions with the pattern 
+ codeally@d32ced17c7a3:~/project$ grep --color  -n  meow[a-z]* kitty_ipsum_1.txt
+ 
+-count number of times a word appear
+codeally@d32ced17c7a3:~/project$ grep -c   meow[a-z]* kitty_ipsum_1.txt
+5
+-find fattern and takeout only the word 
+codeally@d32ced17c7a3:~/project$ grep -o   meow[a-z]* kitty_ipsum_1.txt
+
+-pipe commands to find out the count by lines 
+codeally@d32ced17c7a3:~/project$ grep -o   meow[a-z]* kitty_ipsum_1.txt | wc -l
+7
+
+-append info to file
+codeally@d32ced17c7a3:~/project$ grep -o   meow[a-z]* kitty_ipsum_1.txt | wc -l >> kitty_info.txt
+
+-replace text witn another text sed
+codeally@d32ced17c7a3:~/project$ sed 's/r/2/' name.txt
+f2eeCodeCamp
+
+-use regex flags if you miss some cases
+ex. codeally@d32ced17c7a3:~/project$ sed 's/freecodecamp/f233C0d3C@mp/' name.txt
+freeCodeCamp
+
+sol.
+codeally@d32ced17c7a3:~/project$ sed 's/freecodecamp/f233C0d3C@mp/i' name.txt
+f233C0d3C@mp
+
+-Redirect input with sed
+codeally@d32ced17c7a3:~/project$ sed 's/freecodecamp/f233C0d3C@mp/i' <  name.txt
+f233C0d3C@mp
+
+-use cat to redirect
+codeally@d32ced17c7a3:~/project$ cat name.txt | sed 's/freecodecamp/f233C0d3C@mp/i'
+f233C0d3C@mp
+
+-pipe the number of lines with sed, first character only.
+codeally@d32ced17c7a3:~/project$ grep   -n  meow[a-z]* kitty_ipsum_1.txt | sed 's/[0-9]/1/'
+
+-pipe the number of lines with sed, all number characters.
+codeally@d32ced17c7a3:~/project$ grep   -n  meow[a-z]* kitty_ipsum_1.txt | sed -E 's/[0-9]+/1/'
+
+-Capture numbers and replace with numbers
+codeally@d32ced17c7a3:~/project$ grep   -n  meow[a-z]* kitty_ipsum_1.txt | sed -E 's/([0-9]+)/\1/'
+
+-capture everything and replace only with numbers
+codeally@d32ced17c7a3:~/project$ grep   -n  meow[a-z]* kitty_ipsum_1.txt | sed -E 's/([0-9]+).*/\1/'
+
+-capture the words founded
+codeally@d32ced17c7a3:~/project$ grep -o   cat[a-z]* kitty_ipsum_1.txt 
+
+-output count of lines qhere appears the word
+codeally@d32ced17c7a3:~/project$ grep -o   cat[a-z]* kitty_ipsum_1.txt | wc -l
+7
+
+-replace more than 1 pattern
+cat $1 | sed 's/catnip/dogchow/; s/cat/dog/; s/meow/woof/'
+
+--find more than 1 patterns
+codeally@d32ced17c7a3:~/project$ ./translate.sh kitty_ipsum_1.txt | grep --color -E 'dog[a-z]*|woof[a-z]*'
+
+-- put command result in new file
+codeally@d32ced17c7a3:~/project$ ./translate.sh kitty_ipsum_1.txt  > doggy_ipsum_1.txt
+
+--print differences between 2 files
+codeally@d32ced17c7a3:~/project$ diff --color kitty_ipsum_2.txt doggy_ipsum_2.txt
+
+
+
