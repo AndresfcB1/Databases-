@@ -1,0 +1,9 @@
+bikes
+
+special instructions
+
+Default value to column
+bikes=> ALTER TABLE bikes ADD COLUMN available BOOLEAN  NOT NULL DEFAULT TRUE;
+
+TYPE DATE
+bikes=> ALTER TABLE rentals ADD COLUMN date_rented DATE NOT NULL DEFAULT NOW();
