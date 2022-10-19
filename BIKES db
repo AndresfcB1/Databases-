@@ -7,3 +7,100 @@ bikes=> ALTER TABLE bikes ADD COLUMN available BOOLEAN  NOT NULL DEFAULT TRUE;
 
 TYPE DATE
 bikes=> ALTER TABLE rentals ADD COLUMN date_rented DATE NOT NULL DEFAULT NOW();
+
+
+CREATE AND EMPTY FUNCTION
+-MAIN_MENU() {
+echo How may I help you?
+}
+
+CASE STATEMENTS
+-case EXPRESSION in
+  PATTERN) STATEMENTS ;;
+  PATTERN) STATEMENTS ;;
+  PATTERN) STATEMENTS ;;
+  *) STATEMENTS ;;
+esac
+
+-case $MAIN_MENU_SELECTION in
+  1) RENT_MENU ;;
+  2) RETURN_MENU ;;
+  3) EXIT ;;
+  *) MAIN_MENU ;;
+esac
+
+ADD VALID ARGUMENTS TO YOUR FUNCTION CALL
+-  *) MAIN_MENU "Please enter a valid option." ;;
+
+QUERIES 
+AVAILABLE_BIKES=$($PSQL "SELECT bike_id, type, size FROM bikes WHERE available = true ORDER BY bike_id")
+
+LET NEW LINES APPEAR, WHEN PRINTING
+-echo "$AVAILABLE_BIKES"
+
+UPDATE
+bikes=> UPDATE bikes SET available = false WHERE available= true;
+bikes=> UPDATE bikes SET available = true WHERE type!= 'BMX';
+
+PRINT BY VARIABLES
+-echo "$AVAILABLE_BIKES" | while read BIKE_ID BAR TYPE BAR SIZE
+do
+ echo "$BIKE_ID $TYPE $SIZE"
+
+done
+
+PRINT A SPECIAL SYMBOL
+ echo "$BIKE_ID) $SIZE\" $TYPE Bike"
+
+BASH VERIFY IF A VALUE IS A NUMBER
+[[ a =~ [0-9] ]]; echo $? 1
+[[ a1 =~ [0-9] ]]; echo $? 0
+
+VERIFY IF A NUMBER START AND END WITH NUMBER
+[[ a1 =~ ^[0-9]$ ]]; echo $? 1
+
+VERIFY IF CONTAINS ONLY NUMBERS
+codeally@34c816925086:~/project$ [[ 11 =~ ^[0-9]+$ ]]; echo $?
+0
+
+VERIFY IF IT IS NOT A NUMBER
+[[ ! 11 =~ ^[0-9]+$ ]]; echo $?
+1
+
+QUERY MULTIPLE CONDITIONS
+  BIKE_AVAILABILITY=$($PSQL "SELECT available FROM bikes WHERE bike_id = $BIKE_ID_TO_RENT AND available = true ")
+
+
+SED FOR ELIMINATING SPACES AT THE BEGINING
+codeally@34c816925086:~/project$ echo "$(echo '   M e ' | sed 's/^ *//g')."
+M e .
+
+SED TO ELIMINATE ONE SPACE ONLY AT THE END AND ONLY ONE
+codeally@34c816925086:~/project$ echo "$(echo '   M e ' | sed 's/ $//g')."
+   M e.
+  USE 2 CONDITIONS IN SED INSTRUCTIONS
+  codeally@34c816925086:~/project$ echo "$(echo '   M e   ' | sed -r 's/^ *| *$//g')."
+M e.
+
+--join 2 tables
+
+LEFT JOIN
+bikes=> SELECT * FROM bikes LEFT JOIN rentals USING(bike_id);    
+INNER JOIN TO SLECT ONLY DATA SHARED
+bikes=> SELECT * FROM bikes INNER JOIN rentals USING(bike_id);
+
+INNER JOIN 3 TABLES
+bikes=> SELECT * FROM bikes INNER JOIN rentals USING(bike_id)INNER JOIN customers USING(customer_id);
+
+INNER JOIN WITH CONDITIONS
+SELECT * FROM bikes INNER JOIN rentals USING(bike_id)INNER JOIN customers USING(customer_id) WHERE phone = '555-5555' AND date_returned IS NULL;
+
+Complex queries
+bikes=> SELECT bike_id, size, type FROM bikes INNER JOIN rentals USING(bike_id)INNER JOIN customers USING(customer_id) WHERE phone = '555-5555' AND date_returned IS NULL
+ORDER BY bike_id;
+
+
+
+
+
+
