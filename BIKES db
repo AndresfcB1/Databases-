@@ -9,6 +9,11 @@ TYPE DATE
 bikes=> ALTER TABLE rentals ADD COLUMN date_rented DATE NOT NULL DEFAULT NOW();
 
 
+
+ALTER TABLE rentals ADD COLUMN date_rented DATE NOT NULL DEFAULT NOW();
+
+
+
 CREATE AND EMPTY FUNCTION
 -MAIN_MENU() {
 echo How may I help you?
